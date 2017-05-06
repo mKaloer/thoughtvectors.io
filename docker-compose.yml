@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+
+  # nginx-proxy:
+  #   restart: always
+  #   image: jwilder/nginx-proxy
+  #   container_name: nginx-proxy
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock:ro
+  #   environment:
+  #     - DEFAULT_HOST=jekyll
+
+  nginx-proxy:
+    restart: always
+    build:
+      context: ./nginx
+    container_name: nginx-proxy
+    depends_on:
+      - jekyll-server
+      - api-server
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - nginx-proxy:/tmp/uwsgi:rw
+
+
+  jekyll-server:
+    build:
+      context: ./jekyll
+    restart: always
+    container_name: jekyll
+    volumes:
+      - jekyll:/home/jekyll/thoughtvectors
+
+  api-server:
+    build:
+      context: ./api-server
+    restart: always
+    container_name: api
+    volumes:
+      - nginx-proxy:/tmp/uwsgi:rw
+      - jekyll:/home/jekyll/thoughtvectors:rw
+
+volumes:
+  nginx-proxy:
+  jekyll:
