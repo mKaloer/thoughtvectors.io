@@ -7,7 +7,7 @@ RUN apt-get install -y python3-pip python3-dev
 
 # For Jekyll build tool
 RUN apt-get install -y ruby-full git
-RUN gem install jekyll
+RUN gem install jekyll bundler
 
 RUN git clone https://github.com/mKaloer/thoughtvectors.io.git jekyll_git
 
