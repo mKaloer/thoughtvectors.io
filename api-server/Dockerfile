@@ -9,11 +9,9 @@ RUN apt-get install -y python3-pip python3-dev
 RUN apt-get install -y ruby-full git
 RUN gem install jekyll
 
-CMD git clone git@github.com:mKaloer/thoughtvectors.io.git jekyll_git
+RUN git clone https://github.com/mKaloer/thoughtvectors.io.git jekyll_git
 
-CMD nohup bash -c "./jekyll_deploy_check.sh &"
-
-
+CMD nohup bash -c "./api-server/jekyll_deploy_check.sh &"
 
 COPY ./requirements.txt /api-server/requirements.txt
 
