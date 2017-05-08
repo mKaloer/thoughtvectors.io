@@ -8,12 +8,13 @@ function update_jekyll {
     cd ../../../
 }
 
-while 1
+while [ 1 ]
 do
     while [ ! -f /home/jekyll/do_update ]
     do
-	sleep 10
+	sleep 10;
+	test $? -gt 128 && break
     done
-    update_jekyll()
+    update_jekyll
 done
 ls -l /tmp/list.txt
