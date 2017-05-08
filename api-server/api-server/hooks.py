@@ -34,7 +34,7 @@ def validates_secret(f):
             abort(501)
 
         # HMAC requires the key to be bytes, but data is string
-        mac = hmac.new(str(GITHUB_SECRET), msg=request.data, digestmod=sha1)
+        mac = hmac.new(str(GITHUB_SECRET).encode('utf8'), msg=request.data, digestmod=sha1)
         if not hmac.compare_digest(str(mac.hexdigest()), str(signature)):
             abort(403)
         return f(*args, **kwargs)

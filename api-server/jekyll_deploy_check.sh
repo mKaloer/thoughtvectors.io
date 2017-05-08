@@ -1,10 +1,11 @@
 #!/bin/bash
 function update_jekyll {
     rm -f /home/jekyll/do_update
-    cd jekyll_git
+    cd jekyll_git/jekyll/blog/
     git pull origin master
+    bundle install
     jekyll build --destination /home/jekyll/thoughtvectors
-    cd ..
+    cd ../../../
 }
 
 while 1
